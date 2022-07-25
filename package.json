@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon server.js",
+    "back-dev": "nodemon server.js",
+    "front-dev": "cd public && live-server",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
