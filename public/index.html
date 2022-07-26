@@ -10,10 +10,18 @@
     <link rel="stylesheet" href="./index.css" />
   </head>
   <body>
-    <div id="message-container"></div>
-    <form id="send-container">
-      <input type="text" id="message-input" />
-      <button type="submit" id="send-button">Send</button>
-    </form>
+    <div class="app">
+      <div class="screen join-screen">💬</div>
+      <div class="screen chat-screen active">
+        <div class="header">
+          <div class="logo">Chatroom</div>
+        </div>
+        <div class="messages"></div>
+        <form id="send-container" class="typebox">
+          <input type="text" id="message-input" />
+          <button id="send-message">Send</button>
+        </form>
+      </div>
+    </div>
   </body>
 </html>

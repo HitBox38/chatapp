@@ -1,34 +1,47 @@
 const socket = io("http://localhost:3000");
-const messageContainer = document.getElementById("message-container");
+const messageContainer = document.getElementsByClassName("messages")[0];
 const messageForm = document.getElementById("send-container");
 const messageInput = document.getElementById("message-input");
 
-const appendMessage = (message) => {
+const appendMessage = (sender, message, className) => {
   const messageElement = document.createElement("div");
-  messageElement.innerText = message;
+  if (className === "update") {
+    messageElement.className = className;
+    messageElement.innerText = sender + message;
+  } else {
+    messageElement.className = `message ${className}`;
+    const nameElement = document.createElement("div");
+    const textElement = document.createElement("div");
+    nameElement.className = "name";
+    nameElement.innerText = sender;
+    textElement.className = "text";
+    textElement.innerHTML = message;
+    messageElement.appendChild(nameElement);
+    messageElement.appendChild(textElement);
+  }
   messageContainer.append(messageElement);
 };
 
-const name = prompt("What is your name?");
-appendMessage("You joined");
-socket.emit("new-user", name);
+const userName = prompt("What is your name?");
+appendMessage("You", " joined", "update");
+socket.emit("new-user", userName);
 
 socket.on("chat-message", (data) => {
-  appendMessage(`${data.name}: ${data.message}`);
+  appendMessage(data.name, `${data.message}`, "other-message");
 });
 
 socket.on("user-connected", (name) => {
-  appendMessage(`${name} connected`);
+  appendMessage(name, " connected", "update");
 });
 
 socket.on("user-disconnected", (name) => {
-  appendMessage(`${name} disconnected`);
+  appendMessage(name, " disconnected", "update");
 });
 
 messageForm.addEventListener("submit", (e) => {
   e.preventDefault();
   const message = messageInput.value;
-  appendMessage(`You: ${message}`);
+  appendMessage("you", message, "my-message");
   socket.emit("send-chat-message", message);
   messageInput.value = "";
 });
