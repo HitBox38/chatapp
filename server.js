@@ -11,7 +11,7 @@ const io = new Server(3000, {
 io.on("connection", (socket) => {
   socket.on("new-user", (name) => {
     users[socket.id] = name;
-    socket.broadcast.emit("user-connected", {
+    io.emit("user-connected", {
       newUser: name,
       users,
     });
