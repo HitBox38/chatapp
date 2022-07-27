@@ -6,6 +6,15 @@ const participantsElement = document.getElementById("users");
 const exitButton = document.getElementById("exit-chat");
 let activeChat = [];
 
+const messageFormatter = (message) => {
+  return message
+    .replace(/(?:\*)(?:(?!\s))((?:(?!\*|\n).)+)(?:\*)/g, "<b>$1</b>")
+    .replace(/(?:_)(?:(?!\s))((?:(?!\n|_).)+)(?:_)/g, "<i>$1</i>")
+    .replace(/(?:~)(?:(?!\s))((?:(?!\n|~).)+)(?:~)/g, "<s>$1</s>")
+    .replace(/(?:--)(?:(?!\s))((?:(?!\n|--).)+)(?:--)/g, "<u>$1</u>")
+    .replace(/(?:```)(?:(?!\s))((?:(?!\n|```).)+)(?:```)/g, "<tt>$1</tt>");
+};
+
 const getCookie = (cname) => {
   let name = cname + "=";
   let decodedCookie = decodeURIComponent(document.cookie);
@@ -39,6 +48,7 @@ const appendMessage = (sender, message, className) => {
     messageElement.className = className;
     messageElement.innerText = sender + message;
   } else {
+    message = messageFormatter(message);
     messageElement.className = `message ${className}`;
     const nameElement = document.createElement("div");
     const textElement = document.createElement("div");
