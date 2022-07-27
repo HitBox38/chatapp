@@ -1,23 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap");
 
-/* @media (max-width: 700px) {
-  .chat-main {
-    display: block;
-  }
-
-  .chat-sidebar {
-    display: none;
-  }
-} */
-
-:root {
-  --dark-color-a: #667aff;
-  --dark-color-b: #7386ff;
-  --light-color: #e6e9ff;
-  --success-color: #5cb85c;
-  --error-color: #d9534f;
-}
-
 * {
   box-sizing: border-box;
   margin: 0;
@@ -26,7 +8,7 @@
 
 body {
   font-family: "Roboto", sans-serif;
-  background: var(--light-color);
+  background: #e6e9ff;
   height: 100vh;
   display: flex;
   justify-content: center;
@@ -40,10 +22,6 @@ body {
   background: #fff;
   border-right: 1px solid black;
   border-left: 1px solid black;
-}
-
-.app > .screen {
-  display: none;
 }
 
 .app > .screen.active {
@@ -102,7 +80,8 @@ body {
   height: 50px;
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  flex-direction: column;
+  align-items: flex-start;
   padding: 0 20px;
 }
 
@@ -110,6 +89,13 @@ body {
   font-size: 18px;
   color: #eee;
   font-weight: 600;
+}
+
+.chat-screen .header .participants {
+  color: #eee;
+  width: 100%;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 
 .chat-screen .messages {
