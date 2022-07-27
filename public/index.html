@@ -6,15 +6,18 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Chat App</title>
     <script defer src="http://localhost:3000/socket.io/socket.io.js"></script>
-    <script defer src="./script.js"></script>
+    <script defer type="module" src="./script.js"></script>
     <link rel="stylesheet" href="./index.css" />
   </head>
   <body>
     <div class="app">
       <div class="screen chat-screen active">
         <div class="header">
-          <div class="logo">Chatroom</div>
-          <div class="participants" id="users"></div>
+          <div class="header-info">
+            <div class="logo">Chatroom</div>
+            <div class="participants" id="users"></div>
+          </div>
+          <button id="exit-chat">Exit</button>
         </div>
         <div class="messages"></div>
         <form id="send-container" class="typebox">

@@ -80,24 +80,40 @@ body {
   height: 50px;
   display: flex;
   justify-content: space-between;
-  flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
   padding: 0 20px;
 }
 
-.chat-screen .header .logo {
+.chat-screen .header .header-info {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.chat-screen .header .header-info .logo {
   font-size: 18px;
   color: #eee;
   font-weight: 600;
   padding-top: 2px;
 }
 
-.chat-screen .header .participants {
+.chat-screen .header .header-info .participants {
   color: #eee;
   width: 100%;
   text-overflow: ellipsis;
   overflow: hidden;
   padding-bottom: 2px;
+}
+
+.chat-screen .header button {
+  padding: 5px 10px;
+  border: 1px solid #eee;
+  background: transparent;
+  color: #eee;
+  font-size: 15px;
+  cursor: pointer;
+  outline: none;
 }
 
 .chat-screen .messages {
