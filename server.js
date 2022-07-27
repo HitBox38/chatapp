@@ -1,5 +1,6 @@
 const { Server } = require("socket.io");
 
+// keeps track of the currently online users
 const users = {};
 
 const io = new Server(3000, {
@@ -12,6 +13,7 @@ io.on("connection", (socket) => {
   socket.on("new-user", (name) => {
     users[socket.id] = name;
 
+    // will emit to everyone including the new user itself
     io.emit("user-connected", {
       newUser: name,
       users,

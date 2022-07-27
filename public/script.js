@@ -41,6 +41,11 @@ let user = getCookie("username");
 
 let chat = getCookie("chat");
 
+// A function receiving 3 string variables:
+// - who the message is from
+// - the content itself
+// - class name for the type of message (you, someone else or system notification)
+// and append the message to the chat
 const appendMessage = (sender, message, className) => {
   const messageElement = document.createElement("div");
   if (className === "update") {
@@ -60,16 +65,19 @@ const appendMessage = (sender, message, className) => {
   }
   messageContainer.append(messageElement);
   activeChat.push({ sender, message, className });
+  // Here it will add the message to cookie chat for recording history
   setCookie("chat", JSON.stringify(activeChat), 365);
   messageContainer.scrollTo(0, messageContainer.scrollHeight);
 };
 
+// If there isn't a cookie holding the username it will ask for a new username
 if (user === "") {
   const userName = prompt("What is your name?");
   appendMessage(`You (${userName})`, " joined", "update");
   document.cookie = `username=${userName}`;
   socket.emit("new-user", userName);
 } else {
+  // If there is a cookie holding the username it will check for chat history in the cookies
   if (chat !== "") {
     activeChat = JSON.parse(chat);
     activeChat.map((message) => {
