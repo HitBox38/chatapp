@@ -89,6 +89,7 @@ body {
   font-size: 18px;
   color: #eee;
   font-weight: 600;
+  padding-top: 2px;
 }
 
 .chat-screen .header .participants {
@@ -96,6 +97,7 @@ body {
   width: 100%;
   text-overflow: ellipsis;
   overflow: hidden;
+  padding-bottom: 2px;
 }
 
 .chat-screen .messages {

@@ -4,6 +4,10 @@ const messageForm = document.getElementById("send-container");
 const messageInput = document.getElementById("message-input");
 const participantsElement = document.getElementById("users");
 
+const { cookie } = document;
+
+console.log(cookie);
+
 const appendMessage = (sender, message, className) => {
   const messageElement = document.createElement("div");
   if (className === "update") {
@@ -21,10 +25,11 @@ const appendMessage = (sender, message, className) => {
     messageElement.appendChild(textElement);
   }
   messageContainer.append(messageElement);
+  messageContainer.scrollTo(0, messageContainer.scrollHeight);
 };
 
 const userName = prompt("What is your name?");
-appendMessage("You", " joined", "update");
+appendMessage(`You (${userName})`, " joined", "update");
 socket.emit("new-user", userName);
 
 socket.on("chat-message", (data) => {
@@ -32,13 +37,14 @@ socket.on("chat-message", (data) => {
 });
 
 socket.on("user-connected", ({ newUser, users }) => {
-  console.log(users);
-  participantsElement.innerText = Object.values(users).join(", ");
-  appendMessage(newUser, " connected", "update");
+  participantsElement.innerText = "Online: " + Object.values(users).join(", ");
+  if (newUser !== userName) {
+    appendMessage(newUser, " connected", "update");
+  }
 });
 
 socket.on("user-disconnected", ({ oldUser, users }) => {
-  participantsElement.innerText = Object.values(users).join(", ");
+  participantsElement.innerText = "Online: " + Object.values(users).join(", ");
   appendMessage(oldUser, " disconnected", "update");
 });
 
