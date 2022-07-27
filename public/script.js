@@ -4,6 +4,7 @@ const messageForm = document.getElementById("send-container");
 const messageInput = document.getElementById("message-input");
 const participantsElement = document.getElementById("users");
 const exitButton = document.getElementById("exit-chat");
+let activeChat = [];
 
 const getCookie = (cname) => {
   let name = cname + "=";
@@ -30,7 +31,8 @@ const setCookie = (cname, cvalue, exdays) => {
 
 let user = getCookie("username");
 
-console.log(user);
+let chat = getCookie("chat");
+
 const appendMessage = (sender, message, className) => {
   const messageElement = document.createElement("div");
   if (className === "update") {
@@ -48,6 +50,8 @@ const appendMessage = (sender, message, className) => {
     messageElement.appendChild(textElement);
   }
   messageContainer.append(messageElement);
+  activeChat.push({ sender, message, className });
+  setCookie("chat", JSON.stringify(activeChat), 365);
   messageContainer.scrollTo(0, messageContainer.scrollHeight);
 };
 
@@ -57,8 +61,14 @@ if (user === "") {
   document.cookie = `username=${userName}`;
   socket.emit("new-user", userName);
 } else {
+  if (chat !== "") {
+    activeChat = JSON.parse(chat);
+    activeChat.map((message) => {
+      console.log(message);
+      appendMessage(message.sender, message.message, message.className);
+    });
+  }
   appendMessage(`You (${user})`, " joined", "update");
-  document.cookie = `username=${user}`;
   socket.emit("new-user", user);
 }
 
@@ -88,6 +98,7 @@ messageForm.addEventListener("submit", (e) => {
 
 exitButton.addEventListener("click", () => {
   setCookie("username", user, -15);
+  setCookie("chat", chat, -15);
   socket.emit("user-disconnected");
   window.location.reload();
 });
