@@ -25,6 +25,7 @@
     ```bash
      npm run front-dev
     ```
+    
 ## Features
 
  - Saves your chat history in the site cookies
